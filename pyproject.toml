@@ -1,0 +1,12 @@
+[project]
+name = "smart-fulfillment-showcase"
+version = "0.1.0"
+description = "Showcase for plexus-flow: Polyglot Distributed Sagas & AI Risk Orchestration in Go and Python"
+requires-python = ">=3.11"
+dependencies = [
+    "plexus-flow",
+    "httpx>=0.28",
+]
+
+[tool.uv.sources]
+plexus-flow = { path = "../plexus-flow/sdk/python", editable = true }
