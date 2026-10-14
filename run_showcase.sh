@@ -142,5 +142,21 @@ uv run python python/launcher.py \
     --order-id="ORD-FRAUD-ROLLBACK-9002" \
     --simulate-fraud
 
-echo -e "\n${GREEN}${BOLD}Showcase completed successfully!${RESET}"
-echo -e "Visit ${BOLD}http://${HTTP_ADDR}${RESET} to explore live traces, DAG visualizer, and audit timelines."
+BLOCK_MODE=true
+for arg in "$@"; do
+    if [ "$arg" == "--no-block" ]; then
+        BLOCK_MODE=false
+    fi
+done
+
+echo -e "\n${GREEN}${BOLD}Showcase demo runs completed!${RESET}"
+echo -e "${PURPLE}Services remain active and running in background.${RESET}"
+echo -e "👉 Visit ${BOLD}http://${HTTP_ADDR}${RESET} to explore live traces, DAG visualizer, and audit timelines."
+
+if [ "$BLOCK_MODE" = true ]; then
+    echo -e "${YELLOW}Press Ctrl+C to shut down all showcase services.${RESET}\n"
+    # Keep server and workers running so the user can interact with the dashboard
+    while kill -0 "$SERVER_PID" 2>/dev/null; do
+        sleep 1
+    done
+fi
